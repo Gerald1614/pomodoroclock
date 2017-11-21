@@ -1,0 +1,22 @@
+.progress{
+  height:40px;
+}
+
+a, i {
+  font-size: 40px;
+}
+i:hover{
+  cursor: pointer;
+
+}
+.row, button{
+  margin:20px;
+}
+#timer{
+font-size: 36px;
+}
+
+.hidden {
+  display: none !important;
+  visibility: hidden !important;
+}
