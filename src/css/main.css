@@ -3,6 +3,10 @@ body{
   color:white;
 
 }
+
+.material-icons.red600 { color: #e53935; }
+.material-icons.red900 { color: #b71c1c; }
+
 .progress{
   height:40px;
 }
@@ -15,7 +19,7 @@ img{
 }
 
 a, i {
-  font-size: 40px;
+  font-size: 36px;
 }
 i:hover{
   cursor: pointer;
@@ -35,7 +39,7 @@ font-size: 36px;
 
 .disabled {
   pointer-events:none;
-  opacity: 0.7;
+  opacity: 0.4;
 }
 
 .awesome {
