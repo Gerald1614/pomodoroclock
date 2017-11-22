@@ -3,12 +3,11 @@ restDuration= document.getElementById('restDuration');
 wdProgress= document.getElementById('wdProgress');
 rdProgress= document.getElementById('rdProgress');
 sessionProgress= document.getElementById('sessionProgress');
-var cdTimer= (Number(workDuration.innerHTML) + Number(restDuration.innerHTML))*60000;
-
+var cdTimer;
+var w,r,s;
 var x;
 var started=false;
 var distance, now;
-let laps=0;
 reset();
 
 
@@ -43,18 +42,14 @@ function plusRD(){
 
 function adjustSessionDuration() {
   cdTimer= (Number(workDuration.innerHTML) + Number(restDuration.innerHTML))*60000;
-  wdProgress.setAttribute('aria-valuemax', cdTimer/60000);
-  rdProgress.setAttribute('aria-valuemax', cdTimer/60000);
-  sessionProgress.setAttribute('aria-valuemax', cdTimer/60000);
-  wdProgress.setAttribute('aria-valuenow', (Number(workDuration.innerHTML)));
-  rdProgress.setAttribute('aria-valuenow', (Number(restDuration.innerHTML)));
-  sessionProgress.setAttribute('aria-valuenow', 0);
-  rdProgress.style.width = (Number(restDuration.innerHTML))*100/(cdTimer/60000)+"%";
-  wdProgress.style.width = (Number(workDuration.innerHTML))*100/(cdTimer/60000)+"%";
-  sessionProgress.style.width = "0%";
+  countDownDate = new Date();
+  countDownDate.setMilliseconds(countDownDate.getMilliseconds()+ cdTimer);
+  r = (Number(restDuration.innerHTML))*100/(cdTimer/60000);
+  w = (Number(workDuration.innerHTML))*100/(cdTimer/60000);
   wdProgress.innerHTML=workDuration.innerHTML + " mn";
   rdProgress.innerHTML=restDuration.innerHTML + " mn";
-
+  afficher();
+  s=1/cdTimer*100000;
 };
 
 
@@ -94,7 +89,6 @@ function reset(){
   countDownDate = new Date();
   countDownDate.setMilliseconds(countDownDate.getMilliseconds()+ cdTimer);
   adjustSessionDuration();
-  afficher();
 }
 
 function myTimer(){
@@ -106,23 +100,27 @@ function myTimer(){
     }
 }
 function afficher(){
-  console.log("cdTimer + "+ cdTimer + " distance "+ distance);
     now = new Date().getTime();
     distance = countDownDate - now;
-    laps =(cdTimer-distance)/60000;
+  //  laps =(cdTimer-distance)/60000;
+
     var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     document.getElementById("timer").innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
-    sessionProgress.setAttribute('aria-valuenow', laps);
-    sessionProgress.style.width = (cdTimer-distance)*100/cdTimer+"%";
-    if (wdProgress.getAttribute('aria-valuenow') >=0){    
-      wdProgress.setAttribute('aria-valuenow', (Number(workDuration.innerHTML))- laps);
-      wdProgress.style.width = (Number(workDuration.innerHTML))*100/(cdTimer/60000)- ((cdTimer-distance)*100/cdTimer) +"%";
+    
+    if (w>0){
+      w = w-s;
     }
     else {
-      rdProgress.setAttribute('aria-valuenow', (Number(restDuration.innerHTML))- laps);
-      rdProgress.style.width = (Number(restDuration.innerHTML))*100/(cdTimer/60000)- ((cdTimer-distance)*100/cdTimer) +"%";
+      w=0;
+      r = r-s;
     }
+    sessionProgress.style.width = (100-w-r)+"%"
+    wdProgress.style.width = w+"%";    
+    rdProgress.style.width = r+"%";
+
+
+
 
 }
