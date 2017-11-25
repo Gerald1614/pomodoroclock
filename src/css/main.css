@@ -47,7 +47,7 @@ font-size: 36px;
 }
 
 .awesome {
-  -webkit-animation:colorchange 10s alternate;
+  -webkit-animation:colorchange 8s alternate;
 }
 
 @-webkit-keyframes colorchange {
